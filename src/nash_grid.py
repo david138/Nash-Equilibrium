@@ -22,7 +22,7 @@ class NashGrid:
         return [i for i in range(labels_num)];
 
     def remove_dominated_moves(self):
-        while self.remove_dominated_p1() || self.remove_dominated_p2()
+        while self.remove_dominated_p1() | self.remove_dominated_p2()
 
     def remove_dominated_p1(self):
         rows_to_keep = set()
