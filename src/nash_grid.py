@@ -56,3 +56,22 @@ class NashGrid:
         self.payout_grid = new_payout_grid
         self.col_labels = [self.col_labels[i] for i in sorted(cols_to_keep)]
         return col_num != len(cols_to_keep);
+
+    def pure_strategy_solutions(self):
+        best_payouts = {}
+        row_num = len(self.payout_grid)
+        col_num = len(self.payout_grid[0])
+        for c in range(col_num):
+            max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
+            for r in range(row_num):
+                if (self.payout_grid[r][c] == max_payout):
+                    best_payouts[(r, c)] = (self.row_labels[r], self.row_labels[c])
+
+        best_payout_labels = []
+        for r in range(row_num):
+            max_payout = max([self.payout_grid[r][c][P2] for c in range(col_num)])
+            for c in range(col_num):
+                if (self.payout_grid[r][c] == max_payout):
+                    if best_payouts.has_key((r, c)):
+                        best_payout_labels.add(best_payouts[(r, c)])
+        return best_payout_labels;
