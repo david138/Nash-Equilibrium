@@ -1,3 +1,5 @@
+import numpy as np
+
 P1 = 0
 P2 = 1
 
@@ -73,5 +75,25 @@ class NashGrid:
             for c in range(col_num):
                 if (self.payout_grid[r][c] == max_payout):
                     if best_payouts.has_key((r, c)):
-                        best_payout_labels.add(best_payouts[(r, c)])
+                        best_payout_labels.append(best_payouts[(r, c)])
         return best_payout_labels;
+
+    def mixed_strategy_solutions(self):
+        self.remove_dominated_moves()
+        side_length = len(self.payout_grid)
+        if (side_side == 1):
+            return ([1], self.row_labels, [1], self.col_labels);
+
+        p1_outcomes = [[1 for l in range(side_length)]]
+        for c in range(1, side_length):
+            p1_outcomes.append([self.payout_grid[r][c] - self.payout_grid[r][0] for r in range(side_length)])
+        p1_solutions = [1] + [0 for i in range(side_length - 1)]
+        p1_move_percents = np.linalg.solve(np.array(p1_outcomes), np.array(p1_solutions))
+
+        p2_outcomes = [[1 for l in range(side_length)]]
+        for r in range(1, side_length):
+            p1_outcomes.append([self.payout_grid[r][c] - self.payout_grid[0][c] for c in range(side_length)])
+        p2_solutions = [1] + [0 for i in range(side_length - 1)]
+        p2_move_percents = np.linalg.solve(np.array(p2_outcomes), np.array(p2_solutions))
+
+        return (p1_move_percents, self.row_labels, p2_move_percents, self.col_labels);
