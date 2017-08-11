@@ -2,10 +2,13 @@ from nash_grid import NashGrid
 
 pd = NashGrid("../tests/pd.txt")
 print("test file 1:")
+pd.print_pure_strategies()
 print(pd.payout_grid)
 print(pd.col_labels)
 print(pd.remove_dominated_moves())
 print(pd.payout_grid)
+print(pd.col_labels)
+pd.print_pure_strategies()
 
 pd2 = NashGrid("../tests/pd2.txt")
 print("test file 2:")

@@ -67,15 +67,15 @@ class NashGrid:
         for c in range(col_num):
             max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
             for r in range(row_num):
-                if (self.payout_grid[r][c] == max_payout):
+                if (self.payout_grid[r][c][P1] == max_payout):
                     best_payouts[(r, c)] = (self.row_labels[r], self.row_labels[c])
 
         best_payout_labels = []
         for r in range(row_num):
             max_payout = max([self.payout_grid[r][c][P2] for c in range(col_num)])
             for c in range(col_num):
-                if (self.payout_grid[r][c] == max_payout):
-                    if best_payouts.has_key((r, c)):
+                if (self.payout_grid[r][c][P2] == max_payout):
+                    if (r, c) in best_payouts:
                         best_payout_labels.append(best_payouts[(r, c)])
         return best_payout_labels;
 
@@ -98,3 +98,9 @@ class NashGrid:
         p2_move_percents = np.linalg.solve(np.array(p2_outcomes), np.array(p2_solutions))
 
         return (p1_move_percents, self.row_labels, p2_move_percents, self.col_labels);
+
+    def print_pure_strategies(self):
+        equilibriums = self.pure_strategy_solutions()
+        for s in equilibriums:
+            print("Player 1 plays", s[P1], "and Player 2 plays", s[P2])
+
