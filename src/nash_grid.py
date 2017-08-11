@@ -24,7 +24,8 @@ class NashGrid:
         return [i for i in range(labels_num)];
 
     def remove_dominated_moves(self):
-        while self.remove_dominated_p1() | self.remove_dominated_p2()
+        while self.remove_dominated_p1() | self.remove_dominated_p2():
+            pass
 
     def remove_dominated_p1(self):
         rows_to_keep = set()
@@ -33,8 +34,8 @@ class NashGrid:
         for c in range(col_num):
             max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
             for r in range(row_num):
-                if (self.payout_grid[r][c] == max_payout):
-                    rows_to_keep.update(r)
+                if (self.payout_grid[r][c][P1] == max_payout):
+                    rows_to_keep.add(r)
 
         new_payout_grid = [self.payout_grid[i] for i in sorted(rows_to_keep)]
         self.payout_grid = new_payout_grid
@@ -48,13 +49,13 @@ class NashGrid:
         for r in range(row_num):
             max_payout = max([self.payout_grid[r][c][P2] for c in range(col_num)])
             for c in range(col_num):
-                if (self.payout_grid[r][c] == max_payout):
-                    cols_to_keep.update(c)
+                if (self.payout_grid[r][c][P2] == max_payout):
+                    cols_to_keep.add(c)
 
-        new_payout_grid = [[] for i in range(row_num)]
+        new_payout_grid = [[] for _ in range(row_num)]
         for c in sorted(cols_to_keep):
-            for r in new_payout_grid:
-                r.append(self.payout_grid[r][c])
+            for r in range(row_num):
+                new_payout_grid[r].append(self.payout_grid[r][c])
         self.payout_grid = new_payout_grid
         self.col_labels = [self.col_labels[i] for i in sorted(cols_to_keep)]
         return col_num != len(cols_to_keep);
@@ -84,7 +85,7 @@ class NashGrid:
         if (side_side == 1):
             return ([1], self.row_labels, [1], self.col_labels);
 
-        p1_outcomes = [[1 for l in range(side_length)]]
+        p1_outcomes = [[1] for _ in range(side_length)]
         for c in range(1, side_length):
             p1_outcomes.append([self.payout_grid[r][c] - self.payout_grid[r][0] for r in range(side_length)])
         p1_solutions = [1] + [0 for i in range(side_length - 1)]
@@ -92,7 +93,7 @@ class NashGrid:
 
         p2_outcomes = [[1 for l in range(side_length)]]
         for r in range(1, side_length):
-            p1_outcomes.append([self.payout_grid[r][c] - self.payout_grid[0][c] for c in range(side_length)])
+            p2_outcomes.append([self.payout_grid[r][c] - self.payout_grid[0][c] for c in range(side_length)])
         p2_solutions = [1] + [0 for i in range(side_length - 1)]
         p2_move_percents = np.linalg.solve(np.array(p2_outcomes), np.array(p2_solutions))
 
