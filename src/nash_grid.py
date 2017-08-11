@@ -68,7 +68,7 @@ class NashGrid:
             max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
             for r in range(row_num):
                 if (self.payout_grid[r][c][P1] == max_payout):
-                    best_payouts[(r, c)] = (self.row_labels[r], self.row_labels[c])
+                    best_payouts[(r, c)] = (self.row_labels[r], self.col_labels[c])
 
         best_payout_labels = []
         for r in range(row_num):
