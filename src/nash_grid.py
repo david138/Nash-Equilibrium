@@ -64,6 +64,69 @@ class NashGrid:
         while self.remove_dominated_p1() | self.remove_dominated_p2():
             pass
 
+    def remove_dominated_p1(self):
+        row_num = len(self.payout_grid)
+        col_num = len(self.payout_grid[0])
+        max_values = []
+        for c in range(col_num):
+            max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
+            for r in range(row_num):
+                rows_to_keep = set()
+                if (self.payout_grid[r][c][P1] == max_payout):
+                    rows_to_keep.add(r)
+                max_values.append(rows_to_keep)
+
+        rows_to_keep = []
+        maximum_intersection = set()
+        while len(max_values) != 0:
+            maximum_intersection = max_values[0]
+            for c in range(1, len(max_values)):
+                if len(maximum_intersection & max_values[c]) != 0:
+                    maximum_intersection = maximum_intersection & max_values[c]
+            max_index = maximum_intersection.pop()
+            rows_to_keep.append(max_index)
+            for max_value_row in max_values:
+                if max_index in max_value_row:
+                    list.remove(max_value_row)
+
+        new_payout_grid = [self.payout_grid[i] for i in sorted(rows_to_keep)]
+        self.payout_grid = new_payout_grid
+        self.row_labels = [self.row_labels[i] for i in sorted(rows_to_keep)]
+        return row_num != len(rows_to_keep);
+
+    def remove_dominated_p2(self):
+        row_num = len(self.payout_grid)
+        col_num = len(self.payout_grid[0])
+        max_values = []
+        for r in range(row_num):
+            max_payout = max([self.payout_grid[r][c][P1] for c in range(col_num)])
+            for c in range(col_num):
+                cols_to_keep = set()
+                if (self.payout_grid[r][c][P1] == max_payout):
+                    cols_to_keep.add(c)
+                max_values.append(cols_to_keep)
+
+        cols_to_keep = []
+        maximum_intersection = set()
+        while len(max_values) != 0:
+            maximum_intersection = max_values[0]
+            for r in range(1, len(max_values)):
+                if len(maximum_intersection & max_values[r]) != 0:
+                    maximum_intersection = maximum_intersection & max_values[r]
+            max_index = maximum_intersection.pop()
+            cols_to_keep.append(max_index)
+            for max_value_row in max_values:
+                if max_index in max_value_row:
+                    list.remove(max_value_row)
+
+        new_payout_grid = [[] for _ in range(row_num)]
+        for c in sorted(cols_to_keep):
+            for r in range(row_num):
+                new_payout_grid[r].append(self.payout_grid[r][c])
+        self.payout_grid = new_payout_grid
+        self.col_labels = [self.col_labels[i] for i in sorted(cols_to_keep)]
+        return col_num != len(cols_to_keep);
+
     def pure_strategy_solutions(self):
         best_payouts = {}
         row_num = len(self.payout_grid)
