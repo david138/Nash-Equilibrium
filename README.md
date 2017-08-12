@@ -18,5 +18,5 @@ Input files have the following format:
     3,1 3,2 3,3
 
 Rows represent player 1's moves while columns represent player 2's moves. Each (row, column) pair represents the payouts from the players' corresponding moves. The first value is player 1's payout, the second value is player 2's payout.
-  
+
 This program requires numpy.
