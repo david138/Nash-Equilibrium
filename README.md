@@ -15,8 +15,8 @@ Each row is a move player 1 can perform and each column is a move player 2 can p
 Run nash_eq.py.  
 The first argument should be a file containing a grid.  
 The optional arguments are:  
-'-p': Prints the pure strategy Nash equilibriums.  
-'-m': Prints the mixed strategy Nash equilibriums. 
+"-p": Prints the pure strategy Nash equilibriums.  
+"-m": Prints the mixed strategy Nash equilibriums. 
   
     python nash_eq.py file1 -p  
 Prints the pure strategy Nash equilibriums for the grid in file1.  
