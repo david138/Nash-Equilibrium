@@ -186,6 +186,6 @@ class NashGrid:
     def print_mixed_strategies(self):
         equilibriums = self.mixed_strategy_solutions()
         for r in self.row_labels:
-            print("Player 1 plays", r, equilibriums[0][r], "%")
+            print("Player 1 plays", r, equilibriums[0][r], "percent of the time")
         for c in self.col_labels:
-            print("Player 2 plays", c, equilibriums[0][c], "%")
+            print("Player 2 plays", c, equilibriums[0][c], "percent of the time")
