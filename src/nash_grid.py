@@ -70,24 +70,25 @@ class NashGrid:
         max_values = []
         for c in range(col_num):
             max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
+            rows_to_keep = set()
             for r in range(row_num):
-                rows_to_keep = set()
                 if (self.payout_grid[r][c][P1] == max_payout):
                     rows_to_keep.add(r)
-                max_values.append(rows_to_keep)
+            max_values.append(rows_to_keep)
 
         rows_to_keep = []
-        maximum_intersection = set()
         while len(max_values) != 0:
-            maximum_intersection = max_values[0]
+            maximum_intersection = max_values[0].copy()
             for c in range(1, len(max_values)):
                 if len(maximum_intersection & max_values[c]) != 0:
                     maximum_intersection = maximum_intersection & max_values[c]
             max_index = maximum_intersection.pop()
             rows_to_keep.append(max_index)
+            rows_remaining = []
             for max_value_row in max_values:
-                if max_index in max_value_row:
-                    list.remove(max_value_row)
+                if max_index not in max_value_row:
+                    rows_remaining.append(max_value_row)
+            max_values = rows_remaining
 
         new_payout_grid = [self.payout_grid[i] for i in sorted(rows_to_keep)]
         self.payout_grid = new_payout_grid
@@ -99,25 +100,26 @@ class NashGrid:
         col_num = len(self.payout_grid[0])
         max_values = []
         for r in range(row_num):
-            max_payout = max([self.payout_grid[r][c][P1] for c in range(col_num)])
+            max_payout = max([self.payout_grid[r][c][P2] for c in range(col_num)])
+            cols_to_keep = set()
             for c in range(col_num):
-                cols_to_keep = set()
-                if (self.payout_grid[r][c][P1] == max_payout):
+                if (self.payout_grid[r][c][P2] == max_payout):
                     cols_to_keep.add(c)
-                max_values.append(cols_to_keep)
+            max_values.append(cols_to_keep)
 
         cols_to_keep = []
-        maximum_intersection = set()
         while len(max_values) != 0:
-            maximum_intersection = max_values[0]
-            for r in range(1, len(max_values)):
-                if len(maximum_intersection & max_values[r]) != 0:
-                    maximum_intersection = maximum_intersection & max_values[r]
+            maximum_intersection = max_values[0].copy()
+            for c in range(1, len(max_values)):
+                if len(maximum_intersection & max_values[c]) != 0:
+                    maximum_intersection = maximum_intersection & max_values[c]
             max_index = maximum_intersection.pop()
             cols_to_keep.append(max_index)
-            for max_value_row in max_values:
-                if max_index in max_value_row:
-                    list.remove(max_value_row)
+            cols_remaining = []
+            for max_value_col in max_values:
+                if max_index not in max_value_col:
+                    cols_remaining.append(max_value_col)
+            max_values = cols_remaining
 
         new_payout_grid = [[] for _ in range(row_num)]
         for c in sorted(cols_to_keep):
