@@ -22,4 +22,7 @@ The optional arguments are:
 -p: The pure strategy Nash equilibriums will be printed  
 -m: The mixed strategy Nash equilibriums will be printed  
   
+python nash_eq.py file1 -p  
+will print the pure strategy Nash equilibriums for the grid in file1  
+   
 Written in Python, requires numpy
