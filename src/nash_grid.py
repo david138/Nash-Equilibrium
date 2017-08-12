@@ -21,7 +21,7 @@ class NashGrid:
         return payout_grid;
 
     def generate_labels(self, labels_num):
-        return [i for i in range(labels_num)];
+        return list(range(labels_num));
 
     def remove_strictly_dominated_moves(self):
         while self.remove_strictly_dominated_p1() | self.remove_strictly_dominated_p2():
@@ -176,14 +176,14 @@ class NashGrid:
 
         return (p1_move_percents, p2_move_percents);
 
-    def print_pure_strategies(self):
+    def computer_pure_strategies(self):
         equilibriums = self.pure_strategy_solutions()
         for s in equilibriums:
             print("Player 1 plays", s[P1], "and Player 2 plays", s[P2])
         if len(equilibriums) == 0:
             print("No pure strategies")
 
-    def print_mixed_strategies(self):
+    def computer_mixed_strategies(self):
         equilibriums = self.mixed_strategy_solutions()
         for r in self.row_labels:
             print("Player 1 plays", r, equilibriums[0][r], "percent of the time")
