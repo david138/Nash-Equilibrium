@@ -23,11 +23,11 @@ class NashGrid:
     def generate_labels(self, labels_num):
         return [i for i in range(labels_num)];
 
-    def remove_dominated_moves(self):
-        while self.remove_dominated_p1() | self.remove_dominated_p2():
+    def remove_strictly_dominated_moves(self):
+        while self.remove_strictly_dominated_p1() | self.remove_strictly_dominated_p2():
             pass
 
-    def remove_dominated_p1(self):
+    def remove_strictly_dominated_p1(self):
         rows_to_keep = set()
         row_num = len(self.payout_grid)
         col_num = len(self.payout_grid[0])
@@ -42,7 +42,7 @@ class NashGrid:
         self.row_labels = [self.row_labels[i] for i in sorted(rows_to_keep)]
         return row_num != len(rows_to_keep);
 
-    def remove_dominated_p2(self):
+    def remove_strictly_dominated_p2(self):
         cols_to_keep = set()
         row_num = len(self.payout_grid)
         col_num = len(self.payout_grid[0])
@@ -59,6 +59,10 @@ class NashGrid:
         self.payout_grid = new_payout_grid
         self.col_labels = [self.col_labels[i] for i in sorted(cols_to_keep)]
         return col_num != len(cols_to_keep);
+
+    def remove_dominated_moves(self):
+        while self.remove_dominated_p1() | self.remove_dominated_p2():
+            pass
 
     def pure_strategy_solutions(self):
         best_payouts = {}
