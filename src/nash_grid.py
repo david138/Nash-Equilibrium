@@ -153,25 +153,25 @@ class NashGrid:
         p1_move_percents = {}
         p2_move_percents = {}
         side_length = len(self.payout_grid)
-        if (side_side == 1):
+        if (side_length == 1):
             p1_move_percents[self.row_labels[0]] = 100
             p2_move_percents[self.col_labels[0]] = 100
             return (p1_move_percents, p2_move_percents);
 
         p1_outcomes = [[1] * side_length]
         for c in range(1, side_length):
-            p1_outcomes.append([self.payout_grid[r][c] - self.payout_grid[r][0] for r in range(side_length)])
+            p1_outcomes.append([self.payout_grid[r][c][P2] - self.payout_grid[r][0][P2] for r in range(side_length)])
         p1_solutions = [1] + [0 * (side_length - 1)]
         p1_outcomes = np.linalg.solve(np.array(p1_outcomes), np.array(p1_solutions))
-        for r in range(self.row_labels):
+        for r in range(len(self.row_labels)):
             p1_move_percents[self.row_labels[r]] = p1_outcomes[r] * 100
 
         p2_outcomes = [[1] * side_length]
         for r in range(1, side_length):
-            p2_outcomes.append([self.payout_grid[r][c] - self.payout_grid[0][c] for c in range(side_length)])
+            p2_outcomes.append([self.payout_grid[r][c][P1] - self.payout_grid[0][c][P1] for c in range(side_length)])
         p2_solutions = [1] + [0 * (side_length - 1)]
         p2_outcomes = np.linalg.solve(np.array(p2_outcomes), np.array(p2_solutions))
-        for c in range(self.col_labels):
+        for c in range(len(self.col_labels)):
             p2_move_percents[self.col_labels[c]] = p2_outcomes[c] * 100
 
         return (p1_move_percents, p2_move_percents);
@@ -180,6 +180,8 @@ class NashGrid:
         equilibriums = self.pure_strategy_solutions()
         for s in equilibriums:
             print("Player 1 plays", s[P1], "and Player 2 plays", s[P2])
+        if len(equilibriums) == 0:
+            print("No pure strategies")
 
     def print_mixed_strategies(self):
         equilibriums = self.mixed_strategy_solutions()
