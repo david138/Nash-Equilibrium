@@ -19,8 +19,8 @@ Each cell has player 1's payout followed by player 2's payout with a comma inbet
 To run the program open up a console, then run nash_eq.py.  
 The first argument should be a file containg a grid.  
 The optional arguments are:  
--p: The pure strategy Nash equilibriums will be printed  
--m: The mixed strategy Nash equilibriums will be printed  
+-p: Prints the pure strategy Nash equilibriums  
+-m: Prints the mixed strategy Nash equilibriums 
   
 python nash_eq.py file1 -p  
 will print the pure strategy Nash equilibriums for the grid in file1  
