@@ -10,15 +10,13 @@ The input files have the following format:
     2,1 2,2 2,3  
     3,1 3,2 3,3  
   
-Each row is a move player 1 can perform and each column is a move player 2 can perform. There is a cell for each row, column pair that represents player 1 playing that row and player 2 playing that column. Each cell has player 1's payout followed by player 2's payout with a comma in between, these represent each players payouts for the given outcome.  
-  
-Run nash_eq.py.  
-The first argument should be a file containing a grid.  
-The optional arguments are:  
-"-p": Prints the pure strategy Nash equilibriums.  
-"-m": Prints the mixed strategy Nash equilibriums. 
-  
-    python nash_eq.py file1 -p  
-Prints the pure strategy Nash equilibriums for the grid in file1.  
-   
-Written in Python, requires numpy.
+Rows represent player 1's moves while columns represent player 2's moves. Each (row, column) pair represents an outcome from a combination of the two players' moves. The first value is player 1's payout, the second value is player 2's payout.  
+ 
+To run the program, provide an input file as the first argument and a choice of strategy as the second argument. E.g.  
+ 
+    python nash_eq.py file.txt -p  
+ 
+`-p` prints the pure strategy Nash equilibriums  
+`-m` prints the mixed strategy Nash equilibriums  
+ 
+This program requires numpy.
