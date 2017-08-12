@@ -1,6 +1,6 @@
 # Nash-Equilibrium
   
-The Nash equilibrium is a set of strategies for each player with the following property: given each other players strategies are constant, no player can deviate their strategy for a higher average payout.  
+The Nash equilibrium is a set of strategies for each player where the following property holds: given each other players strategies are constant, no player can deviate their strategy for a higher average payout.  
   
 This program can compute pure and mixed strategy Nash equilibriums. Pure strategy means each player plays only one move. Mixed strategy means each player can play multiple moves with different probabilities.  
 
