@@ -16,4 +16,10 @@ Each row is a move player 1 can perform and each column is a move player 2 can p
 There is a cell for each row, column pair that represents player 1 playing that row and player 2 playing that column.  
 Each cell has player 1's payout followed by player 2's payout with a comma inbetween, these represent each players payouts for the given outcome.  
   
-  Written in Python, requires numpy
+To run the program open up a console, then run nash_eq.py.  
+The first argument should be a file containg a grid.  
+The optional arguments are:  
+-p: The pure strategy Nash equilibriums will be printed  
+-m: The mixed strategy Nash equilibriums will be printed  
+  
+Written in Python, requires numpy
