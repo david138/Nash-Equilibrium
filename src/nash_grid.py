@@ -34,7 +34,7 @@ class NashGrid:
         for c in range(col_num):
             max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
             for r in range(row_num):
-                if (self.payout_grid[r][c][P1] == max_payout):
+                if self.payout_grid[r][c][P1] == max_payout:
                     rows_to_keep.add(r)
 
         new_payout_grid = [self.payout_grid[i] for i in sorted(rows_to_keep)]
@@ -49,7 +49,7 @@ class NashGrid:
         for r in range(row_num):
             max_payout = max([self.payout_grid[r][c][P2] for c in range(col_num)])
             for c in range(col_num):
-                if (self.payout_grid[r][c][P2] == max_payout):
+                if self.payout_grid[r][c][P2] == max_payout:
                     cols_to_keep.add(c)
 
         new_payout_grid = [[] for _ in range(row_num)]
@@ -72,23 +72,19 @@ class NashGrid:
             max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
             rows_to_keep = set()
             for r in range(row_num):
-                if (self.payout_grid[r][c][P1] == max_payout):
+                if self.payout_grid[r][c][P1] == max_payout:
                     rows_to_keep.add(r)
             max_values.append(rows_to_keep)
 
         rows_to_keep = []
-        while len(max_values) != 0:
+        while max_values:
             maximum_intersection = max_values[0].copy()
             for c in range(1, len(max_values)):
                 if len(maximum_intersection & max_values[c]) != 0:
                     maximum_intersection = maximum_intersection & max_values[c]
             max_index = maximum_intersection.pop()
             rows_to_keep.append(max_index)
-            rows_remaining = []
-            for max_value_row in max_values:
-                if max_index not in max_value_row:
-                    rows_remaining.append(max_value_row)
-            max_values = rows_remaining
+            max_values = [row for row in max_values if max_index not in row]
 
         new_payout_grid = [self.payout_grid[i] for i in sorted(rows_to_keep)]
         self.payout_grid = new_payout_grid
@@ -103,23 +99,19 @@ class NashGrid:
             max_payout = max([self.payout_grid[r][c][P2] for c in range(col_num)])
             cols_to_keep = set()
             for c in range(col_num):
-                if (self.payout_grid[r][c][P2] == max_payout):
+                if self.payout_grid[r][c][P2] == max_payout:
                     cols_to_keep.add(c)
             max_values.append(cols_to_keep)
 
         cols_to_keep = []
-        while len(max_values) != 0:
+        while max_values:
             maximum_intersection = max_values[0].copy()
             for c in range(1, len(max_values)):
                 if len(maximum_intersection & max_values[c]) != 0:
                     maximum_intersection = maximum_intersection & max_values[c]
             max_index = maximum_intersection.pop()
             cols_to_keep.append(max_index)
-            cols_remaining = []
-            for max_value_col in max_values:
-                if max_index not in max_value_col:
-                    cols_remaining.append(max_value_col)
-            max_values = cols_remaining
+            max_values = [col for col in max_values if max_index not in col]
 
         new_payout_grid = [[] for _ in range(row_num)]
         for c in sorted(cols_to_keep):
@@ -136,14 +128,14 @@ class NashGrid:
         for c in range(col_num):
             max_payout = max([self.payout_grid[r][c][P1] for r in range(row_num)])
             for r in range(row_num):
-                if (self.payout_grid[r][c][P1] == max_payout):
+                if self.payout_grid[r][c][P1] == max_payout:
                     best_payouts[(r, c)] = (self.row_labels[r], self.col_labels[c])
 
         best_payout_labels = []
         for r in range(row_num):
             max_payout = max([self.payout_grid[r][c][P2] for c in range(col_num)])
             for c in range(col_num):
-                if (self.payout_grid[r][c][P2] == max_payout):
+                if self.payout_grid[r][c][P2] == max_payout:
                     if (r, c) in best_payouts:
                         best_payout_labels.append(best_payouts[(r, c)])
         return best_payout_labels;
@@ -153,7 +145,7 @@ class NashGrid:
         p1_move_percents = {}
         p2_move_percents = {}
         side_length = len(self.payout_grid)
-        if (side_length == 1):
+        if side_length == 1:
             p1_move_percents[self.row_labels[0]] = 100
             p2_move_percents[self.col_labels[0]] = 100
             return (p1_move_percents, p2_move_percents);
@@ -176,14 +168,14 @@ class NashGrid:
 
         return (p1_move_percents, p2_move_percents);
 
-    def computer_pure_strategies(self):
+    def compute_pure_strategies(self):
         equilibriums = self.pure_strategy_solutions()
         for s in equilibriums:
             print("Player 1 plays", s[P1], "and Player 2 plays", s[P2])
         if len(equilibriums) == 0:
             print("No pure strategies")
 
-    def computer_mixed_strategies(self):
+    def compute_mixed_strategies(self):
         equilibriums = self.mixed_strategy_solutions()
         for r in self.row_labels:
             print("Player 1 plays", r, equilibriums[0][r], "percent of the time")
